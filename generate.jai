@@ -48,14 +48,6 @@ generate_bindings :: (args: [] string, minimum_os_version: type_of(Build_Options
     {
         using options;
 
-        #if OS == .WINDOWS {
-            output_filename := "windows.jai";
-        } else #if OS == .MACOS {
-            output_filename := "macos.jai";
-        } else {
-            #assert false;
-        }
-
         array_add(*libpaths, lib_directory);
         array_add(*libnames, lib_base_name);
 
