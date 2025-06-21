@@ -104,9 +104,9 @@ generate_bindings :: (args: [] string, minimum_os_version: type_of(Build_Options
 FOOTER_TEMPLATE :: #string END
 
 #if OS == .WINDOWS {
-    %1 :: #library "windows/%1";
+    assimp_vc143_mt :: #library "windows/%1";
 } else #if OS == .MACOS {
-    %1 :: #library "macos/%1";
+    assimp :: #library "macos/%1";
 } else {
     #assert false;
 }

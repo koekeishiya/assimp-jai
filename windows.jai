@@ -3680,7 +3680,7 @@ aiPostProcessSteps :: enum s32 {
 #if OS == .WINDOWS {
     assimp_vc143_mt :: #library "windows/assimp-vc143-mt";
 } else #if OS == .MACOS {
-    assimp_vc143_mt :: #library "macos/assimp-vc143-mt";
+    assimp :: #library "macos/assimp-vc143-mt";
 } else {
     #assert false;
 }
