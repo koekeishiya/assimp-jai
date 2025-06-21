@@ -51,48 +51,36 @@ generate_bindings :: (args: [] string, minimum_os_version: type_of(Build_Options
         array_add(*libpaths, lib_directory);
         array_add(*libnames, lib_base_name);
 
-        array_add(*include_paths, "include");
-        array_add(*source_files, "include/assimp/defs.h");
-        array_add(*source_files, "include/assimp/types.h");
-        array_add(*source_files, "include/assimp/vector2.h");
-        array_add(*source_files, "include/assimp/vector3.h");
-        array_add(*source_files, "include/assimp/color4.h");
-        array_add(*source_files, "include/assimp/matrix3x3.h");
-        array_add(*source_files, "include/assimp/matrix4x4.h");
-        array_add(*source_files, "include/assimp/quaternion.h");
-        array_add(*source_files, "include/assimp/texture.h");
-        array_add(*source_files, "include/assimp/mesh.h");
-        array_add(*source_files, "include/assimp/aabb.h");
-        array_add(*source_files, "include/assimp/light.h");
-        array_add(*source_files, "include/assimp/camera.h");
-        array_add(*source_files, "include/assimp/material.h");
-        array_add(*source_files, "include/assimp/anim.h");
-        array_add(*source_files, "include/assimp/metadata.h");
-        array_add(*source_files, "include/assimp/importerdesc.h");
-        array_add(*source_files, "include/assimp/cimport.h");
-        array_add(*source_files, "include/assimp/scene.h");
-        array_add(*source_files, "include/assimp/postprocess.h");
+        assimp_files :: string.[
+            "include/assimp/defs.h",
+            "include/assimp/types.h",
+            "include/assimp/vector2.h",
+            "include/assimp/vector3.h",
+            "include/assimp/color4.h",
+            "include/assimp/matrix3x3.h",
+            "include/assimp/matrix4x4.h",
+            "include/assimp/quaternion.h",
+            "include/assimp/texture.h",
+            "include/assimp/mesh.h",
+            "include/assimp/aabb.h",
+            "include/assimp/light.h",
+            "include/assimp/camera.h",
+            "include/assimp/material.h",
+            "include/assimp/anim.h",
+            "include/assimp/metadata.h",
+            "include/assimp/importerdesc.h",
+            "include/assimp/cimport.h",
+            "include/assimp/scene.h",
+            "include/assimp/postprocess.h"
+        ];
 
-        array_add(*path_fragments_to_treat_as_non_system_paths, "include/assimp/defs.h");
-        array_add(*path_fragments_to_treat_as_non_system_paths, "include/assimp/types.h");
-        array_add(*path_fragments_to_treat_as_non_system_paths, "include/assimp/vector2.h");
-        array_add(*path_fragments_to_treat_as_non_system_paths, "include/assimp/vector3.h");
-        array_add(*path_fragments_to_treat_as_non_system_paths, "include/assimp/color4.h");
-        array_add(*path_fragments_to_treat_as_non_system_paths, "include/assimp/matrix3x3.h");
-        array_add(*path_fragments_to_treat_as_non_system_paths, "include/assimp/matrix4x4.h");
-        array_add(*path_fragments_to_treat_as_non_system_paths, "include/assimp/quaternion.h");
-        array_add(*path_fragments_to_treat_as_non_system_paths, "include/assimp/texture.h");
-        array_add(*path_fragments_to_treat_as_non_system_paths, "include/assimp/mesh.h");
-        array_add(*path_fragments_to_treat_as_non_system_paths, "include/assimp/aabb.h");
-        array_add(*path_fragments_to_treat_as_non_system_paths, "include/assimp/light.h");
-        array_add(*path_fragments_to_treat_as_non_system_paths, "include/assimp/camera.h");
-        array_add(*path_fragments_to_treat_as_non_system_paths, "include/assimp/material.h");
-        array_add(*path_fragments_to_treat_as_non_system_paths, "include/assimp/anim.h");
-        array_add(*path_fragments_to_treat_as_non_system_paths, "include/assimp/metadata.h");
-        array_add(*path_fragments_to_treat_as_non_system_paths, "include/assimp/importerdesc.h");
-        array_add(*path_fragments_to_treat_as_non_system_paths, "include/assimp/cimport.h");
-        array_add(*path_fragments_to_treat_as_non_system_paths, "include/assimp/scene.h");
-        array_add(*path_fragments_to_treat_as_non_system_paths, "include/assimp/postprocess.h");
+        array_add(*include_paths, "include");
+        array_add(*source_files, ..assimp_files);
+
+        #if OS == .MACOS {
+            // For some reason macOS needs this, but Windows does not..
+            array_add(*path_fragments_to_treat_as_non_system_paths, ..assimp_files);
+        }
 
         generate_library_declarations = false;
         footer = tprint(FOOTER_TEMPLATE, lib_base_name);
